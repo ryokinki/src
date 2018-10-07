@@ -68,5 +68,14 @@ php源码,ext/需要的扩展目录
 sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
 提示warning pdo已加载,所以php.ini去掉pdo.so即可
 
+测试网站速度http_load
+https://blog.csdn.net/chuanyu/article/details/46688607
 phalcon项目
 http://www.jicker.cn/5581.html
+https://blog.csdn.net/u011466674/article/details/52335770
+https://blog.csdn.net/QZFZZ/article/details/40074569
+zephir
+https://blog.csdn.net/manwea/article/details/78835644
+
+zephir安装
+需要re2c
