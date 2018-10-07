@@ -1,0 +1,72 @@
+brew 报错找不到要安装的软件
+git -C "$(brew --repo homebrew/core)" fetch --unshallow
+
+pcre
+http://www.linuxfromscratch.org/blfs/view/svn/general/pcre.html
+./configure --prefix=/usr                     \
+--docdir=/usr/share/doc/pcre \
+--enable-unicode-properties       \
+--enable-pcre16                   \
+--enable-pcre32                   \
+--enable-pcregrep-libz            \
+--enable-pcregrep-libbz2          \
+--enable-pcretest-libreadline     \
+--disable-static
+make 
+sudo make install
+
+nginx
+需要pcre
+./configure
+sudo make && sudo make install
+bash_profile
+export PATH=${PATH}:/usr/local/nginx/sbin
+
+php72
+./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php --enable
+sudo make && sudo make install
+
+php.ini默认在/usr/local/lib目录下，php运行核心配置文件 
+php-fpm.conf默认在/usr/local/etc/目录下，是php-fpm进程服务的配置文件 
+www.conf默认在/usr/local/etc/php-fpm.d目录下，是php-fpm进程服务的扩展配置文件 
+php-config默认在/usr/local/bin/目录下，这里面有 PHP 扩展目录extension_dir
+
+/usr/local/bin/php-config是存在的，其他三个需要复制
+sudo cp ~/Downloads/php-7.1.1/php.ini-development /usr/local/php/php.ini
+sudo cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf
+sudo cp /usr/local/etc/php-fpm.d/www.conf.default /usr/local/etc/php-fpm.d/www.conf
+
+vim php-fpm.conf
+include=etc/php-fpm.d/*.conf
+开启fpm
+sudo php-fpm
+sudo killall -9 php-fpm
+
+test
+php-fpm -c /usr/local/php/etc/php.ini -y /usr/local/php/etc/php-fpm.conf -t
+/usr/local/php/sbin/php-fpm -c /usr/local/php/etc/php.ini -y /usr/local/php/etc/php-fpm.conf
+close
+kill -INT `cat /usr/local/php/var/run/php-fpm.pid`
+restart
+kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
+https://www.cnblogs.com/mingaixin/p/3794227.html fpm
+
+php cli fastcgi 都需要正确的指定php.ini
+默认安装php是/etc/php.ini 自己编译的话是自己指定目录
+php --version
+php --moduels
+php --ini
+可以查看ini目录,以及已经安装的cli扩展phpinfo里面有扩展代表fastcgi模式php.ini正确不代表cli下php.ini正确
+
+手动安装pdo pdo_mysql扩展
+php源码,ext/需要的扩展目录
+/usr/local/php/bin/phpize
+./configure --help
+./configure --with-php-config=/usr/local/php/bin/php-config --enable-pdo=shared
+./configure --with-php-config=/usr/local/php/bin/php-config --with-pdo-mysql=/usr/local/mysql
+安装完pdo_mysql提示libmysqlclient.18.dylib未加载,路径问题
+sudo ln -s /usr/local/mysql/lib/libmysqlclient.18.dylib /usr/lib/libmysqlclient.18.dylib
+提示warning pdo已加载,所以php.ini去掉pdo.so即可
+
+phalcon项目
+http://www.jicker.cn/5581.html
