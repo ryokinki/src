@@ -23,7 +23,8 @@ bash_profile
 export PATH=${PATH}:/usr/local/nginx/sbin
 
 php72
-./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php --enable
+./configure --enable-fpm
+./configure --enable-fpm --with-pdo-mysql=/usr/local/mysql --with-openssl=/usr/local/Cellar/openssl@1.1/1.1.0f --with-libxml-dir=/usr/local/Cellar/libxml2/2.9.4_3 --with-config-file-path=/usr/local/etc/php.ini
 sudo make && sudo make install
 
 php.ini默认在/usr/local/lib目录下，php运行核心配置文件 
