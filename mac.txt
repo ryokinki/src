@@ -1,3 +1,19 @@
+卸载mac自带apache
+要停止apache服务：sudo apachectl stop
+删除如下apache目录：
+/etc/apache2
+/usr/include/apahce2
+/usr/libexec/apache2
+删除php目录，（有点多）：
+/usr/php
+/usr/bin/php
+/usr/bin/php-config
+/usr/bin/phpize
+/usr/include/php
+/usr/lib/php
+/usr/share/man/man*/php*
+
+
 brew 报错找不到要安装的软件
 git -C "$(brew --repo homebrew/core)" fetch --unshallow
 
