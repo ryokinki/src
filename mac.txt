@@ -96,3 +96,26 @@ https://blog.csdn.net/manwea/article/details/78835644
 
 zephir安装
 需要re2c
+
+phalcon多模块项目
+创建一个多模块的项目
+phalcon project website modules
+
+新增加一个名叫backend，以Test\Modules为命名空间的后台模块
+phalcon module –-name backend –-namespace=Test\Modules –output=app/modules
+
+使用phalcon devtools生成一个带继承的新控制器
+phalcon controller –-name index -output=app/modules/backend/controllers –base-class=ControllerBase
+这里用到了phalcon controller的三个参数：–name参数指定控制器的名称，–output参数指定生成控制器的位置，–base-class参数指定继承的基类
+
+要想使用新的模块中的新方法，还需要在配置文件中进行一些修改：bootstrap_web.php中注册模块
+'backend'  => ['className' => 'Test\Modules\Backend\Module'],
+loader.php中注册模块类
+'Test\Modules\Backend\Module'  => APP_PATH . '/modules/backend/Module.php',
+
+如果要使用公共的model则需要在相应模块下注册命名空间 fontend模块下Module.php中
+$loader->registerNamespaces([
+    'Test\Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
+    'Test\Modules\Frontend\Models' => __DIR__ . '/models/',
+    'Test\Common\Models'    =>  APP_PATH . '/common/models' //添加公共model
+]);
